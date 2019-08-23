@@ -70,12 +70,12 @@ CHIP ALU {
 
     // 반전
     Not16(in=resF, out=resNf);
-    // ???? 왜 15지???
     Mux16(a=resF, b=resNf, sel=no, out[0..7]=res0, out[8..15]=res1, out[15]=ng, out=out);
 
-    //////////// 반환값 처리 //////////
+    //////////// 모든값이 0인지 여부 확인 //////////
     
     Or8Way(in=res0, out=allFalse0);
     Or8Way(in=res1, out=allFalse1);
-    Nor(a=allFalse0, b=allFalse1, out=nzr);
+    Or(a=allFalse0, b=allFalse1, out=nzr);
+    Not(in=nzr, out=zr);
 }
